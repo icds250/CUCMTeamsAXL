@@ -5,6 +5,37 @@ This repository contains PowerShell modules to automate Cisco CUCM Single Number
 Modules included:
 - CUCM-RemoteDestinations.psm1
 - Enable Teams.psm1
+## Function reference
+
+### CUCM-RemoteDestinations.psm1
+
+| Function | Purpose |
+|---|---|
+| `Initialize-CucmAxlConnection` | Set CUCM AXL endpoint, version, and auth context for subsequent calls. |
+| `Invoke-CucmAxl` | Send a SOAP request to CUCM AXL and return parsed XML (includes debug output). |
+| `Get-CucmNodeText` | Helper to safely read node text from CUCM XML responses. |
+| `Get-CucmUserRaw` | Fetch raw CUCM user XML via getUser (used for troubleshooting). |
+| `Invoke-CucmApplyLine` | Apply config changes for a directory number (DN) in CUCM. |
+| `Invoke-CucmResetLine` | Reset a directory number (DN) in CUCM. |
+| `Get-CucmUserMobility` | Return mobility status, primary extension, and associated RDP names for a CUCM user. |
+| `Enable-CucmUserMobility` | Enable mobility for a CUCM user and set timers and limits. |
+| `Get-CucmRemoteDestinationProfiles` | List Remote Destination Profiles (RDPs), optionally filtered by name. |
+| `Get-CucmRemoteDestinations` | List Remote Destinations (RDs), optionally filtered by RDP name. |
+| `New-CucmRemoteDestinationProfile` | Create an RDP for a user and associate a desk DN and CSS values. |
+| `New-CucmRemoteDestination` | Create an RD on an RDP for a destination number (includes ownerUserId). |
+| `Set-CucmUserPrimaryExtension` | Set a CUCM user primary extension (pattern and partition). |
+| `Get-CucmPhoneDetails` | Get phone owner, description, device CSS, and line list (DN and partition). |
+| `Get-CucmLineCss` | Get the calling search space (CSS) configured on a specific DN. |
+| `Search-CucmPhones` | Search phones by DN, owner, description, or phone name and return full line/CSS info. |
+| `New-CucmSnrUser` | Orchestrate end-to-end CUCM SNR provisioning (mobility, primary DN, RDP, RD). |
+| `Get-CucmSnrUser` | Get a combined snapshot of user mobility, RDPs, and RDs for troubleshooting. |
+
+### Enable Teams.psm1
+
+| Function | Purpose |
+|---|---|
+| `Enable-TeamsEnterpriseVoiceUser` | Enable Teams Enterprise Voice: assign number, dial plan, voice routing policy, and voicemail-related policies. |
+
 
 ## Requirements
 
@@ -42,7 +73,7 @@ Create a CSV file named snr-users.csv:
 
 ```csv
 UserId,Upn,DeskDn,DeskDnPartition,MobileNumberE164,MobileDestinationDigits,RdpName,RdName,DevicePool,Css,RerouteCss,MobilityCss,TenantDialPlan,VoiceRoutingPolicy,TeamsCallingPolicy,OnlineVoicemailPolicy,PhoneNumberType
-testuser,testuser@cloudcondensate.bc.ca,2463,ExtensionsPart,+11235812463,11235812463,RDP_Teams_testuser,RD_Teams_11235812463,Default,CSS-Name,CSS-Name,CSS-NName,Default-DialPlan,VoiceRoutingPolicy,CallingPolicy-VoicemailEnabled,TranscriptionDisabled,DirectRouting
+testuser,testuser@test.ca,2463,ExtensionsPart,+11235812463,11235812463,RDP_Teams_testuser,RD_Teams_11235812463,Default,LdCSS,LdCSS,LdCSS,DialPlan,DR,CallingPolicy-VoicemailEnabled,TranscriptionDisabled,DirectRouting
 ```
 
 Notes:
